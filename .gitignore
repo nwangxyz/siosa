@@ -1,0 +1,27 @@
+# 빌드 결과
+**/bin/
+**/obj/
+**/__pycache__/
+
+# 개인 설정·진행 상황·프리셋·디버그 기록
+settings.json
+progress.json
+progress/
+profiles/
+debug/
+
+# 도구·GGPK 추출 원본·테스트 스크린샷 (용량이 큼, README 참고). 테스트 스크립트와 dat 스키마만 포함
+tools/*
+!tools/tests/
+tools/tests/big/
+!tools/schema/
+
+# 백업·저장 중 임시 파일 (regex.json 백업, SafeFile 의 .tmp)
+*.bak
+*.tmp
+
+# 배포 파일 (release.bat 결과, GitHub 릴리스에 올림)
+dist/
+
+# README 용 원본 게임 캡처 (정리한 것은 docs/images)
+screenshot/

@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>Siosa</AssemblyName>
+    <RootNamespace>Siosa</RootNamespace>
+    <Nullable>disable</Nullable>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <DebugType>none</DebugType>
+    <ApplicationIcon>assets\siosa.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <!-- 자동 업데이트: 릴리스 zip 풀기 -->
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <!-- 트레이·창 제목·메인 화면 로고용 (exe 안에 넣어 따로 복사할 파일 없음) -->
+    <EmbeddedResource Include="assets\siosa.ico" LogicalName="Siosa.siosa.ico" />
+    <!-- 메인 화면 '버그 제보 · 건의하기' 카카오톡 오픈채팅 QR -->
+    <EmbeddedResource Include="assets\kakao_qr.png" LogicalName="Siosa.kakao_qr.png" />
+    <!-- 게임 데이터를 exe 안에 (배포는 exe 하나). 개발 중에는 저장소의 data\ 를 디스크에서 읽는다 -->
+    <EmbeddedResource Include="..\data\*.json;..\data\*.png" LogicalName="Siosa.data.%(Filename)%(Extension)" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <LibGGPK>..\tools\LibGGPK3\bin\win-x64</LibGGPK>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="LibGGPK3"><HintPath>$(LibGGPK)\LibGGPK3.dll</HintPath></Reference>
+    <Reference Include="LibBundle3"><HintPath>$(LibGGPK)\LibBundle3.dll</HintPath></Reference>
+    <Reference Include="LibBundledGGPK3"><HintPath>$(LibGGPK)\LibBundledGGPK3.dll</HintPath></Reference>
+    <Reference Include="SystemExtensions"><HintPath>$(LibGGPK)\SystemExtensions.dll</HintPath></Reference>
+    <None Include="$(LibGGPK)\oo2core.dll" CopyToOutputDirectory="PreserveNewest" Link="oo2core.dll" />
+  </ItemGroup>
+
+</Project>

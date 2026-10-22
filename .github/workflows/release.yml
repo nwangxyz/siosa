@@ -1,0 +1,31 @@
+# 태그(v1.0.0 등)를 푸시하면 Windows 서버에서 빌드해 GitHub 릴리스를 만들고 Siosa-v<버전>.zip 을 첨부한다.
+#   1) Overlay/AppInfo.cs 의 Version 을 올리고 커밋·푸시
+#   2) git tag v<버전>  →  git push origin v<버전>
+# 태그와 AppInfo.cs 버전이 다르면 release.ps1 이 실패시킨다 (잘못된 버전이 올라가지 않도록).
+# 앱의 자동 업데이트는 이 릴리스(최신)의 태그와 첨부 zip 을 본다.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write   # 릴리스 만들기·파일 첨부
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build portable zip
+        shell: pwsh
+        run: ./release.ps1 -Tag "${{ github.ref_name }}"
+
+      - name: Create GitHub release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = "${{ github.ref_name }}"
+          gh release create $tag "dist/Siosa-$tag.zip" --title "Siosa $tag" --generate-notes

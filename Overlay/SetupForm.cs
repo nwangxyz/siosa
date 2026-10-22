@@ -184,6 +184,7 @@ namespace Siosa
             var notes = (update.Notes ?? "").Replace("\r", "");
             int cut = notes.IndexOf("\n---", StringComparison.Ordinal);
             if (cut >= 0) notes = notes.Substring(0, cut);
+            notes = System.Text.RegularExpressions.Regex.Replace(notes, @"^.*releases/download.*$\n?", "", System.Text.RegularExpressions.RegexOptions.Multiline);   // 맨 위 '받기' 링크 줄
             notes = System.Text.RegularExpressions.Regex.Replace(notes, @"^#+\s*", "", System.Text.RegularExpressions.RegexOptions.Multiline)
                          .Replace("**", "").Replace("`", "").Trim();
             if (notes.Length > 600) notes = notes.Substring(0, 600) + "…";

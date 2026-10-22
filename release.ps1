@@ -41,7 +41,9 @@ $changelog = Get-Content (Join-Path $root 'docs\CHANGELOG.md') -Raw -Encoding UT
 $m = [regex]::Match($changelog, "(?ms)^## v$([regex]::Escape($ver))\s*\r?\n(.*?)(?=^## |\z)")
 if (-not $m.Success) { throw "docs\CHANGELOG.md 에 '## v$ver' 항목이 없습니다. 이번 버전 변경 사항을 적어 주세요." }
 $guide = (Get-Content (Join-Path $root 'docs\release-notes.md') -Raw -Encoding UTF8).Replace('{VERSION}', $ver)
-$notes = "## v$ver 변경 사항`n`n" + $m.Groups[1].Value.Trim() + "`n`n" + $guide
+#   GitHub 는 첨부 파일(Assets) 목록을 본문 아래에만 보여 주므로, 바로 받는 링크를 본문 맨 위에 둔다
+$download = "https://github.com/nwangxyz/siosa/releases/download/v$ver/Siosa-v$ver.zip"
+$notes = "### [⬇ Siosa-v$ver.zip 받기]($download)`n`n" + "## v$ver 변경 사항`n`n" + $m.Groups[1].Value.Trim() + "`n`n" + $guide
 [IO.File]::WriteAllText((Join-Path $dist 'release-notes.md'), $notes, (New-Object Text.UTF8Encoding($false)))
 
 $zip = Join-Path $dist "Siosa-v$ver.zip"

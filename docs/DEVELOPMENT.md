@@ -395,9 +395,11 @@ Content.ggpk는 읽기 전용으로 엽니다.
 - 버전: `Overlay/AppInfo.cs` 의 `Version` 한 곳 (어셈블리 버전·메인 화면 표시·업데이트 비교)
 - 배포 파일: `release.bat` (= `release.ps1`, UTF-8 BOM 으로 저장) → `dist\Siosa-v<버전>.zip` = `Siosa\Siosa.exe` + `Siosa\README.txt`(= `docs/README.txt`). `dist/` 는 git 제외
 - 릴리스 올리기 (자동, GitHub Actions `.github/workflows/release.yml`)
-  1. `Overlay/AppInfo.cs` 의 `Version` 을 올리고 커밋·푸시
+  1. `Overlay/AppInfo.cs` 의 `Version` 을 올리고, `docs/CHANGELOG.md` 맨 위에 `## v<버전>` 변경 사항을 적어 커밋·푸시
   2. `git tag v<버전>` → `git push origin v<버전>`
-  3. Actions 가 Windows 서버에서 `release.ps1 -Tag v<버전>` (태그와 AppInfo.cs 버전이 다르면 실패) → `gh release create` 로 릴리스(제목 `Siosa v<버전>`, 변경 내역 자동) + `Siosa-v<버전>.zip` 첨부. 저장소 권한(`GITHUB_TOKEN`)만 씀
+  3. Actions 가 Windows 서버에서 `release.ps1 -Tag v<버전>` (태그와 AppInfo.cs 버전이 다르거나 CHANGELOG 에 그 버전이 없으면 실패) → 릴리스(제목 `Siosa v<버전>`) + `Siosa-v<버전>.zip` 첨부. 같은 태그 릴리스가 있으면 본문·zip 만 바꿈. 저장소 권한(`GITHUB_TOKEN`)만 씀
+  - 릴리스 본문(사용자용) = `## v<버전> 변경 사항`(CHANGELOG) + `docs/release-notes.md`(받기·설치·SmartScreen·시작하기·단축키·업데이트·문의, `{VERSION}` 치환) → `dist/release-notes.md`
+  - 앱의 업데이트 확인 창은 본문에서 첫 `---` 위(변경 사항)만, 마크다운 기호를 떼고 보여 줌
   - `release.ps1` 은 저장소의 `tools\dotnet` 이 있으면 그것(이 PC), 없으면 서버에 설치된 `dotnet` 으로 빌드
   - 손으로 올릴 때: 태그 `v<버전>`, 첨부 `Siosa-v<버전>.zip` (이름이 `Siosa-` 로 시작하고 `.zip` 으로 끝나야 업데이트가 찾음)
   - 저장소는 공개여야 함 (앱이 인증 없이 API 조회)

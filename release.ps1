@@ -35,6 +35,15 @@ if ($LASTEXITCODE -ne 0) { throw '빌드 실패' }
 Copy-Item (Join-Path $build 'Siosa.exe') $pkg
 Copy-Item (Join-Path $root 'docs\README.txt') (Join-Path $pkg 'README.txt')
 
+# 릴리스 페이지 본문 (사용자용): 이번 버전 변경 사항(docs\CHANGELOG.md 의 '## v<버전>') + 공통 안내(docs\release-notes.md)
+#   앱의 업데이트 확인 창에는 본문 앞부분이 보이므로 변경 사항을 맨 위에 둔다
+$changelog = Get-Content (Join-Path $root 'docs\CHANGELOG.md') -Raw -Encoding UTF8
+$m = [regex]::Match($changelog, "(?ms)^## v$([regex]::Escape($ver))\s*\r?\n(.*?)(?=^## |\z)")
+if (-not $m.Success) { throw "docs\CHANGELOG.md 에 '## v$ver' 항목이 없습니다. 이번 버전 변경 사항을 적어 주세요." }
+$guide = (Get-Content (Join-Path $root 'docs\release-notes.md') -Raw -Encoding UTF8).Replace('{VERSION}', $ver)
+$notes = "## v$ver 변경 사항`n`n" + $m.Groups[1].Value.Trim() + "`n`n" + $guide
+[IO.File]::WriteAllText((Join-Path $dist 'release-notes.md'), $notes, (New-Object Text.UTF8Encoding($false)))
+
 $zip = Join-Path $dist "Siosa-v$ver.zip"
 if (Test-Path $zip) { Remove-Item $zip -Force }
 Compress-Archive -Path $pkg -DestinationPath $zip

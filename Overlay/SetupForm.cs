@@ -180,7 +180,12 @@ namespace Siosa
         async void RunUpdate()
         {
             if (!Updater.IsNewer(update)) return;
-            var notes = (update.Notes ?? "").Trim();
+            // 릴리스 본문의 맨 위 '변경 사항'만 (--- 아래는 설치 안내), 마크다운 기호는 떼고
+            var notes = (update.Notes ?? "").Replace("\r", "");
+            int cut = notes.IndexOf("\n---", StringComparison.Ordinal);
+            if (cut >= 0) notes = notes.Substring(0, cut);
+            notes = System.Text.RegularExpressions.Regex.Replace(notes, @"^#+\s*", "", System.Text.RegularExpressions.RegexOptions.Multiline)
+                         .Replace("**", "").Replace("`", "").Trim();
             if (notes.Length > 600) notes = notes.Substring(0, 600) + "…";
             if (!Confirm($"v{AppInfo.Version} → v{update.Version} 으로 업데이트할까요?\n받은 뒤 Siosa 가 다시 시작됩니다. 설정·프리셋·진행 기록은 그대로 남습니다." +
                          (notes.Length > 0 ? "\n\n" + notes : ""))) return;

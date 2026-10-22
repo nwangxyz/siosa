@@ -409,5 +409,5 @@ Content.ggpk는 읽기 전용으로 엽니다.
   - 누르면: 확인 창 → 진행 창(`UpdateForm`: 받는 중 n% · 압축 푸는 중 · 바꾸는 중, 받기 0~90%) → zip 받기(github.com 주소만) → 임시 폴더에 풀기(압축 밖 경로 거부) → `Siosa.exe` 를 `Siosa.exe.old` 로 바꾸고 새 exe 넣기(실패하면 되돌림) → README.txt 덮어쓰기 → 묻지 않고 종료 → 새 exe 를 `--after-update <pid>` 로 실행 → 새 프로세스가 예전 프로세스 종료를 기다린 뒤 `.old` 삭제
   - SiosaData 는 건드리지 않음 (데이터는 exe 안이라 exe 만 바꾸면 됨)
   - 개발용: `--checktest <결과.txt>` (릴리스 확인), `--installtest <zip> <결과.txt>` (exe 하나 복사본에서 zip 으로 바꾸기만). 가짜 1.0.1 로 확인: exe 교체(.old 남음), README 교체, SiosaData\settings.json 그대로
-- 게임 화면 이미지: Siosa 창(오버레이·보상 강조·트리 창)은 보상 판별 캡처에 섞이지 않게 화면 캡처에서 제외돼 있어(WDA_EXCLUDEFROMCAPTURE) PrintScreen·Win+Shift+S 에도 안 찍힘. `Siosa.exe --showcapture` 로 실행하면 찍힘 (`capture.bat`, `Native.ShowInCapture`, 오버레이에 빨간 `화면 캡처 모드` 줄. 이때는 판별 캡처에 Siosa 창이 섞일 수 있음). 확인: `--affinitytest <결과.txt> [--showcapture]` → 0x11 제외 / 0x0 찍힘
+- 게임 화면 이미지: Siosa 창(오버레이·보상 강조·트리 창)은 보상 판별 캡처에 섞이지 않게 화면 캡처에서 제외돼 있어(WDA_EXCLUDEFROMCAPTURE) PrintScreen·Win+Shift+S 에도 안 찍힘. `Siosa.exe --showcapture` 로 실행하면 찍힘 (`capture.bat`, `Native.ShowInCapture`. 영상·이미지에 그대로 쓰도록 표시 줄은 없음. 이때는 판별 캡처에 Siosa 창이 섞일 수 있음). 확인: `--affinitytest <결과.txt> [--showcapture]` → 0x11 제외 / 0x0 찍힘
 - 사용자용 README: 저장소 맨 위 `README.md` (이미지 `docs/images/`). 설정창 화면은 `Siosa.exe --tabshot <폴더>` (`SIOSA_ROOT`=아무 경로 → 메인 화면 버전 줄 표시, `SIOSA_CHAR`=캐릭터 표시)로 찍고 창 테두리 7px 를 잘라 256색으로 줄임

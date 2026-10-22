@@ -745,7 +745,6 @@ namespace Siosa
             UpdateTreeWindow();   // 패시브 트리는 따로 뜨는 창
 
             if (status != null) lines.Add(new Line { Text = status, Color = Theme.Accent });
-            if (Native.ShowInCapture) lines.Add(new Line { Text = "화면 캡처 모드 (--showcapture): PrintScreen 에 이 창이 찍힘", Color = Color.FromArgb(235, 110, 90) });
             if (editMode) lines.Add(new Line { Text = $"이동 모드: 드래그 후 {Hotkeys.Text(settings, Hotkeys.Move)}", Color = Theme.Accent });
             else lines.Add(new Line
             {
